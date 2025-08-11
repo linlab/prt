@@ -1,0 +1,68 @@
+{
+  "dataset_info": {
+    "dataset_name": "ImageNet",
+    "models_tested": [
+      "simple",
+      "residual",
+      "vit",
+      "vae",
+      "hybrid",
+      "recurrent",
+      "diffusion"
+    ],
+    "total_models": 7,
+    "samples_per_condition": 200,
+    "epochs": 20
+  },
+  "model_results": {
+    "simple": {
+      "reconstruction_mse": 106837.17353515625,
+      "condition_diversity": 0.6083404492126734,
+      "severity_scaling": 0.9486302572190022,
+      "literature_consistency": 0.7185252469683451,
+      "perceptual_distance": 0.7942140215919131
+    },
+    "residual": {
+      "reconstruction_mse": 147452.8590983073,
+      "condition_diversity": 0.14752440964054717,
+      "severity_scaling": 0.975294440589767,
+      "literature_consistency": 0.5191025623118256,
+      "perceptual_distance": 0.09122954566209089
+    },
+    "vit": {
+      "reconstruction_mse": 104123.31979166667,
+      "condition_diversity": 0.5677931923391518,
+      "severity_scaling": 0.9610508586754468,
+      "literature_consistency": 0.7348186904881275,
+      "perceptual_distance": 0.7231276361715226
+    },
+    "vae": {
+      "reconstruction_mse": 139872.78424479166,
+      "condition_diversity": 0.45435672765320523,
+      "severity_scaling": 0.5336347845453973,
+      "literature_consistency": 0.7156980335036642,
+      "perceptual_distance": 0.8959847944123405
+    },
+    "hybrid": {
+      "reconstruction_mse": 85459.62966688474,
+      "condition_diversity": 1.292163912084929,
+      "severity_scaling": 0.8619317193484315,
+      "literature_consistency": 0.7932613836664733,
+      "perceptual_distance": 0.4082050295103164
+    },
+    "recurrent": {
+      "reconstruction_mse": 172567.29739583333,
+      "condition_diversity": 0.6117264615512406,
+      "severity_scaling": 0.6013331922768893,
+      "literature_consistency": 0.7319731912375036,
+      "perceptual_distance": 0.9173833160173326
+    },
+    "diffusion": {
+      "reconstruction_mse": 298556.29661458335,
+      "condition_diversity": 0.08980532865306097,
+      "severity_scaling": -0.4262548432896193,
+      "literature_consistency": 0.7506827996851552,
+      "perceptual_distance": 0.9329426416328975
+    }
+  }
+}

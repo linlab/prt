@@ -1,0 +1,7 @@
+{
+  "reconstruction_mse": 287946.4890625,
+  "condition_diversity": 0.08265335564647103,
+  "severity_scaling": -0.13482935018571482,
+  "literature_consistency": 0.3878295450511467,
+  "perceptual_distance": 1.0339162519999914
+}
