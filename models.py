@@ -1,6 +1,6 @@
 """
 Model architectures for Perceptual Reality Transformer
-Includes CNN, residual, hybrid, ViT, recurrent, diffusion, and VAE models
+Includes CNN, residual, ViT, recurrent, diffusion, and VAE models
 """
 
 import torch
@@ -9,8 +9,8 @@ import torch.nn.functional as F
 import timm
 from perturbations import PERTURBATION_FUNCTIONS
 
-class SimpleCNN(nn.Module):
-    """Simple CNN encoder-decoder"""
+class EncoderDecoderCNN(nn.Module):
+    """Encoder-decoder CNN"""
     def __init__(self, num_conditions=8):
         super().__init__()
         
@@ -129,66 +129,6 @@ class ResidualPerceptual(nn.Module):
         output = normal_mask * image + (1 - normal_mask) * output
         
         return torch.clamp(output, -3, 3)
-
-class HybridModel(nn.Module):
-    """Hybrid: neural network + traditional perturbations"""
-    def __init__(self, num_conditions=8):
-        super().__init__()
-        
-        self.adjustment_net = nn.Sequential(
-            nn.Conv2d(3, 16, 3, padding=1), nn.ReLU(),
-            nn.Conv2d(16, 16, 3, padding=1), nn.ReLU(),
-            nn.Conv2d(16, 3, 3, padding=1), nn.Tanh()
-        )
-        
-        self.condition_embed = nn.Embedding(num_conditions, 16)
-        self.severity_embed = nn.Linear(1, 16)
-        
-        # Fix: Calculate correct input channels for mix_weights
-        # Input will be: image (3) + spatial_cond (16) = 19 channels
-        self.mix_weights = nn.Sequential(
-            nn.Conv2d(3 + 16, 8, 3, padding=1), nn.ReLU(),
-            nn.Conv2d(8, 1, 3, padding=1), nn.Sigmoid()
-        )
-        
-        self.condition_names = [
-            'normal', 'simultanagnosia', 'prosopagnosia', 'adhd_attention',
-            'visual_agnosia', 'depression_mood', 'anxiety_tunnel', 'alzheimer_memory'
-        ]
-    
-    def forward(self, image, condition_id, severity):
-        batch_size = image.size(0)
-        
-        # Traditional perturbation
-        perturbations = []
-        for i in range(batch_size):
-            cond = condition_id[i].item()
-            sev = severity[i].item()
-            if cond in PERTURBATION_FUNCTIONS:
-                pert = PERTURBATION_FUNCTIONS[cond](image[i:i+1], sev)
-                perturbations.append(pert)
-            else:
-                perturbations.append(image[i:i+1])
-        
-        traditional_output = torch.cat(perturbations, dim=0)
-        
-        # Neural adjustment
-        cond_emb = self.condition_embed(condition_id)
-        sev_emb = self.severity_embed(severity.unsqueeze(-1))
-        combined_cond = cond_emb * sev_emb  # [batch, 16]
-        
-        h, w = image.shape[2], image.shape[3]
-        spatial_cond = combined_cond.unsqueeze(-1).unsqueeze(-1).expand(-1, -1, h, w)  # [batch, 16, h, w]
-        
-        neural_adjustment = self.adjustment_net(image)
-        
-        # Mix input: image (3) + spatial_cond (16) = 19 channels
-        mix_input = torch.cat([image, spatial_cond], dim=1)  # [batch, 19, h, w]
-        mix_weight = self.mix_weights(mix_input)
-        
-        output = mix_weight * traditional_output + (1 - mix_weight) * (image + neural_adjustment * 0.3)
-        
-        return output
 
 class ViTPerceptual(nn.Module):
     """Vision Transformer based model"""

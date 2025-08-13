@@ -132,7 +132,9 @@ def create_publication_tables(cross_analysis):
     latex_table1 += "\\hline\n"
     
     for model_name in sorted(common_models):
-        row = model_name.replace('_', '\\_')
+        # Fix: Extract the underscore replacement outside f-string
+        model_display = model_name.replace('_', '\\_')
+        row = model_display
         for dataset_name in dataset_names:
             results = cross_analysis['summary_tables']['by_model'][model_name][dataset_name]
             mse = f"{results.get('reconstruction_mse', 0):.3f}"
@@ -165,7 +167,9 @@ def create_publication_tables(cross_analysis):
             dataset_results = cross_analysis['summary_tables']['by_dataset'][dataset_name]
             best_model = best_func(dataset_results.items(), 
                                  key=lambda x: x[1].get(metric_key, 0 if best_func == max else float('inf')))
-            row += f" & {best_model[0].replace('_', '\\_')}"
+            # Fix: Extract the underscore replacement outside f-string
+            best_model_display = best_model[0].replace('_', '\\_')
+            row += f" & {best_model_display}"
         latex_table2 += row + " \\\\\n"
     
     latex_table2 += "\\hline\n\\end{tabular}\n\\end{table}\n"

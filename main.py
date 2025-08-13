@@ -21,9 +21,8 @@ from utils import setup_directories_for_dataset, print_dataset_results_table
 
 # Model definitions for easy selection
 ALL_MODELS = {
-    'simple': SimpleCNN,
+    'cnn': EncoderDecoderCNN,
     'residual': ResidualPerceptual,
-    'hybrid': HybridModel,
     'vit': ViTPerceptual,
     'recurrent': RecurrentPerceptual,
     'diffusion': DiffusionPerceptual,
@@ -32,7 +31,7 @@ ALL_MODELS = {
 
 # Model groups for quick selection
 MODEL_GROUPS = {
-    'fast': ['simple', 'residual', 'hybrid'],
+    'fast': ['cnn', 'residual'],
     'advanced': ['vit', 'recurrent'],
     'generative': ['diffusion', 'vae'],
     'all': list(ALL_MODELS.keys())

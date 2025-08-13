@@ -7,7 +7,7 @@
 
 **Official implementation for "Perceptual Reality Transformer: Neural Architectures for Simulating Neurological Perception Conditions"**
 
-> **Abstract:** Neurological conditions affecting visual perception create profound experiential divides between affected individuals and their caregivers, families, and medical professionals. We present the Perceptual Reality Transformer, a comprehensive framework employing seven distinct neural architectures to simulate eight neurological perception conditions with scientifically-grounded visual transformations. Our system learns mappings from natural images to condition-specific perceptual states, enabling others to experience approximations of simultanagnosia, prosopagnosia, ADHD attention deficits, visual agnosia, depression-related changes, anxiety tunnel vision, and Alzheimer's memory effects. Through systematic evaluation across ImageNet and CIFAR-10 datasets, we demonstrate that hybrid neural-algorithmic approaches achieve optimal performance, outperforming pure neural methods. Our work establishes the first systematic benchmark for neurological perception simulation, contributes novel condition-specific perturbation functions grounded in clinical literature, and provides quantitative metrics for evaluating simulation fidelity. The framework has immediate applications in medical education, empathy training, and assistive technology development, while advancing our fundamental understanding of how neural networks can model atypical human perception.
+> **Abstract:** Neurological conditions affecting visual perception create profound experiential divides between affected individuals and their caregivers, families, and medical professionals. We present the Perceptual Reality Transformer, a comprehensive framework employing six distinct neural architectures to simulate eight neurological perception conditions with scientifically-grounded visual transformations. Our system learns mappings from natural images to condition-specific perceptual states, enabling others to experience approximations of simultanagnosia, prosopagnosia, ADHD attention deficits, visual agnosia, depression-related changes, anxiety tunnel vision, and Alzheimer's memory effects. Through systematic evaluation across ImageNet and CIFAR-10 datasets, we demonstrate that Vision Transformer architectures achieve optimal performance, outperforming traditional CNN and generative approaches. Our work establishes the first systematic benchmark for neurological perception simulation, contributes novel condition-specific perturbation functions grounded in clinical literature, and provides quantitative metrics for evaluating simulation fidelity. The framework has immediate applications in medical education, empathy training, and assistive technology development, while advancing our fundamental understanding of how neural networks can model atypical human perception.
 
 ---
 
@@ -18,7 +18,7 @@ Neurological conditions affecting visual perception create profound experiential
 ### Key Features
 
 - **8 Neurological Conditions**: Simultanagnosia, prosopagnosia, ADHD attention, visual agnosia, depression, anxiety tunnel vision, Alzheimer's memory effects
-- **7 Neural Architectures**: CNN, ResNet, Hybrid, Vision Transformer, LSTM, Diffusion, VAE
+- **6 Neural Architectures**: CNN, ResNet, Vision Transformer, LSTM, Diffusion, VAE
 - **Comprehensive Evaluation**: 5 metrics across ImageNet and CIFAR-10 datasets
 - **Clinically Grounded**: Perturbation functions derived from peer-reviewed neuroscience literature
 
@@ -35,13 +35,13 @@ pip install -r requirements.txt
 ### Basic Usage
 
 ```python
-from models import HybridModel
+from models import ViTPerceptual
 from perturbations import PERTURBATION_FUNCTIONS
 import torch
 
 # Load pretrained model
-model = HybridModel()
-model.load_state_dict(torch.load('models/hybrid_best.pth'))
+model = ViTPerceptual()
+model.load_state_dict(torch.load('models/vit_best.pth'))
 
 # Simulate a condition
 image = torch.randn(1, 3, 224, 224)  # Your input image
@@ -56,29 +56,28 @@ simulated = model(image, torch.tensor([condition]), torch.tensor([severity]))
 
 ```bash
 # Train all models on CIFAR-10
-python main.py --models all --datasets cifar10 --epochs 20
+python main.py --models all --datasets cifar10 --epochs 50
 
 # Train specific models
-python main.py --models hybrid vit --datasets both --epochs 15
+python main.py --models recurrent vit --datasets both --epochs 15
 python main.py --models diffusion --datasets imagenet --epochs 15
 
 # Fast test run
-python main.py --models simple --epochs 5 --samples-per-condition 100
+python main.py --models cnn --epochs 5 --samples-per-condition 100
 
 # Parallel execution (run in separate terminals)
-python main.py --models simple residual --parallel-id 0
-python main.py --models hybrid vit --parallel-id 1
+python main.py --models cnn residual --parallel-id 0
+python main.py --models vit --parallel-id 1
 ```
 
 ## 📊 Results
 
-Our comprehensive evaluation across CIFAR-10 and ImageNet demonstrates that **hybrid approaches** combining clinical knowledge with neural learning achieve optimal performance. A subset of the results are:
+Our comprehensive evaluation across CIFAR-10 and ImageNet demonstrates that **vision transformer** achieve optimal performance. A subset of the results are:
 
 | Model | CIFAR-10 MSE ↓ | Diversity ↑ | Severity ↑ | ImageNet MSE ↓ |
 |-------|----------------|-------------|------------|----------------|
-| **HybridModel** | **79,055** | **1.16** | 0.73 | **85,460** |
-| ViTPerceptual | 97,304 | 0.75 | **0.96** | 104,123 |
-| SimpleCNN | 109,304 | 0.76 | 0.92 | 106,837 |
+| ViTPerceptual | **93,920** | 0.72 | **0.95** | **100,671** |
+| EncoderDecoderCNN | 109,304 | 0.76 | 0.92 | 118,693 |
 
 *Full results and analysis available in our [paper](https://arxiv.org/abs/2025.XXXXX).*
 
@@ -98,9 +97,8 @@ Our comprehensive evaluation across CIFAR-10 and ImageNet demonstrates that **hy
 
 ```
 Input Image → [Architecture Branch] → Condition Simulation
-              ├── SimpleCNN: Basic encoder-decoder
+              ├── EncoderDecoderCNN: Basic encoder-decoder
               ├── ResidualNet: Residual perturbations  
-              ├── HybridModel: Clinical algorithms + neural fusion
               ├── ViTPerceptual: Vision transformer with attention
               ├── RecurrentLSTM: Sequential processing
               ├── DiffusionModel: DDPM-style generation
