@@ -1,6 +1,6 @@
 # Perceptual Reality Transformer
 
-[![arXiv](https://img.shields.io/badge/arXiv-2025.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2025.XXXXX)
+[![arXiv](https://img.shields.io/badge/arXiv-2508.09852.svg)](https://arxiv.org/abs/2508.09852)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
@@ -13,7 +13,7 @@
 
 ## Overview
 
-Neurological conditions affecting visual perception create profound experiential divides between affected individuals and their caregivers, families, and medical professionals. This repository presents the **Perceptual Reality Transformer**, a comprehensive framework employing seven distinct neural architectures to simulate eight neurological perception conditions with scientifically-grounded visual transformations.
+Neurological conditions affecting visual perception create profound experiential divides between affected individuals and their caregivers, families, and medical professionals. This repository presents the **Perceptual Reality Transformer**, a comprehensive framework employing six distinct neural architectures to simulate eight neurological perception conditions with scientifically-grounded visual transformations.
 
 ### Key Features
 
@@ -79,7 +79,7 @@ Our comprehensive evaluation across CIFAR-10 and ImageNet demonstrates that **vi
 | ViTPerceptual | **93,920** | 0.72 | **0.95** | **100,671** |
 | EncoderDecoderCNN | 109,304 | 0.76 | 0.92 | 118,693 |
 
-*Full results and analysis available in our [paper](https://arxiv.org/abs/2025.XXXXX).*
+*Full results and analysis available in our [paper](https://arxiv.org/abs/2508.09852).*
 
 ## 🧠 Supported Conditions
 
@@ -131,7 +131,7 @@ If you use this work in your research, please cite our paper:
 @article{lin2025perceptual,
   title={Perceptual Reality Transformer: Neural Architectures for Simulating Neurological Perception Conditions},
   author={Lin, Baihan},
-  journal={arXiv preprint arXiv:2025.XXXXX},
+  journal={arXiv preprint arXiv:2508.09852},
   year={2025}
 }
 ```
@@ -146,7 +146,7 @@ We welcome contributions from the community! Areas for contribution include:
 
 Please open an issue or pull request to discuss your ideas.
 
-For questions about the paper or methodology, please refer to our [arXiv preprint](https://arxiv.org/abs/2025.XXXXX), or contact me at: Baihan Lin (doerlbh@gmail.com)
+For questions about the paper or methodology, please refer to our [arXiv preprint](https://arxiv.org/abs/2508.09852), or contact me at: Baihan Lin (doerlbh@gmail.com)
 
 ## 📜 License
 
